@@ -1,9 +1,11 @@
 const http = require('http');
-const api = require('./apikey.json')
+const colors = require('colors');
 
 function printResult(movie) {
   console.log(movie);
 }
+
+
 function getMovie(movie) {
   const url = `http://www.omdbapi.com/?apikey=${api.key}&t=${movie}`;
   const request = http.get(url, response => {
@@ -21,4 +23,9 @@ function getMovie(movie) {
 }
 
 const query = process.argv.slice(2);
-getMovie(query.join('+'));
+try {
+  const api = require('./apikey.json');
+  getMovie(query.join('+'));
+} catch(e) {
+  console.error(e.message.red);
+}
